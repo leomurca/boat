@@ -14,18 +14,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.leomurca.boat.presentation.ui.home.HomeScreen
+import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
+import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.ui.theme.BoatTheme
 
 class MainActivity : ComponentActivity() {
@@ -74,21 +75,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    @Composable
-    fun HomeScreen(navController: NavHostController) {
-        Text(text = "Home Screen")
-    }
-
-    @Composable
-    fun ReadLaterScreen(navController: NavHostController) {
-        Text(text = "Read Later Screen")
-    }
-
-    @Composable
-    fun SettingsScreen(navController: NavHostController) {
-        Text(text = "Settings Screen")
     }
 
     sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
