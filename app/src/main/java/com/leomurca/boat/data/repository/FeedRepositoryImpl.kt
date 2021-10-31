@@ -7,7 +7,7 @@ import javax.inject.Inject
 class FeedRepositoryImpl @Inject constructor(
     private val dataSource: FeedDataSource
 ) : FeedRepository {
-    override suspend fun feedWithURL(url: String): Feed {
+    override suspend fun feedWithURL(url: String): Feed? {
         return dataSource.feedWithURL(url)
     }
 }

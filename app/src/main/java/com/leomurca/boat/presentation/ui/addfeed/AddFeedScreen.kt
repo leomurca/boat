@@ -3,11 +3,8 @@ package com.leomurca.boat.presentation.ui.addfeed
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,6 +12,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,19 +23,43 @@ import com.leomurca.boat.data.model.Feed
 @Composable
 fun AddFeedScreen(navController: NavController, viewModel: AddFeedViewModel) {
     val uiState = viewModel.uiState.collectAsState()
+    val urlState = viewModel.url
 
-    when (val state = uiState.value) {
-        is AddFeedViewModel.UIState.Success -> {
-            Feed(
-                feed = state.feed,
-                onClick = { navController.navigate(Screen.AddFeedDetails.route) }
-            )
-        }
-        is AddFeedViewModel.UIState.Empty -> {
-            Text("No feeds found!")
-        }
-        is AddFeedViewModel.UIState.Loading -> {
-            // Do nothing
+    Column {
+        TextField(
+            value = urlState.value,
+            onValueChange = { viewModel.onChangeURL(it) },
+            label = { Text("Feed URL") },
+            placeholder = { Text(text = "Enter the feed url you want to subscribe to...") },
+            modifier = Modifier.textFieldModifiers()
+        )
+
+        Button(
+            onClick = { viewModel.onFetchFeed() },
+            content = { Text("Add ") },
+            modifier = Modifier.buttonModifiers()
+        )
+
+        when (val state = uiState.value) {
+            is AddFeedViewModel.UIState.Success -> {
+                Feed(
+                    feed = state.feed,
+                    onClick = { navController.navigate(Screen.AddFeedDetails.route) }
+                )
+            }
+            is AddFeedViewModel.UIState.Empty -> {
+                Text(
+                    text = "No feeds were found!",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.textFieldModifiers()
+                )
+            }
+            is AddFeedViewModel.UIState.Loading -> {
+                // Show loading
+            }
+            is AddFeedViewModel.UIState.Initial -> {
+                // Do nothing
+            }
         }
     }
 }
@@ -78,6 +100,14 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
         }
     }
 }
+
+private fun Modifier.textFieldModifiers() = this
+    .fillMaxWidth()
+    .padding(20.dp)
+
+private fun Modifier.buttonModifiers() = this
+    .fillMaxWidth()
+    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
 
 private fun Modifier.cardModifiers() = this
     .fillMaxWidth()

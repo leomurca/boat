@@ -3,7 +3,7 @@ package com.leomurca.boat.data.repository.datasource
 import com.leomurca.boat.data.model.Feed
 
 class FeedInMemoryDataSource : FeedDataSource {
-    override suspend fun feedWithURL(url: String): Feed {
+    override suspend fun feedWithURL(url: String): Feed? {
         return when (url) {
             "nat" -> Feed(
                 title = "Nat King Cole RSS Feed Titleeeeeeeee",
@@ -11,7 +11,7 @@ class FeedInMemoryDataSource : FeedDataSource {
                 language = "en-US",
                 imagePath = "nat.jpg"
             )
-            else -> Feed(title = "Default Title", description = "Default Description")
+            else -> null
         }
     }
 }
