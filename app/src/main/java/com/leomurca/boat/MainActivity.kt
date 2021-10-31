@@ -27,6 +27,7 @@ import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.ui.theme.BoatTheme
 
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

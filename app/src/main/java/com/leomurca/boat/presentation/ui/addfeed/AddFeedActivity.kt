@@ -2,6 +2,7 @@ package com.leomurca.boat.presentation.ui.addfeed
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -12,9 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.leomurca.boat.presentation.ui.addfeeddetails.AddFeedDetailsScreen
 import com.leomurca.boat.ui.theme.BoatTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
+@AndroidEntryPoint
 class AddFeedActivity : AppCompatActivity() {
+
+    private val viewModel: AddFeedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -27,7 +33,7 @@ class AddFeedActivity : AppCompatActivity() {
                         startDestination = Screen.AddFeed.route,
                         modifier = Modifier.padding(innerPadding),
                         builder = {
-                            composable(Screen.AddFeed.route) { AddFeedScreen(navController) }
+                            composable(Screen.AddFeed.route) { AddFeedScreen(navController, viewModel) }
                             composable(Screen.AddFeedDetails.route) { AddFeedDetailsScreen() }
                         }
                     )
