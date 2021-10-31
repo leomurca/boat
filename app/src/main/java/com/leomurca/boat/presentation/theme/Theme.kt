@@ -1,21 +1,24 @@
-package com.leomurca.boat.ui.theme
+package com.leomurca.boat.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.leomurca.boat.ui.theme.*
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Orange,
+    primaryVariant = DarkerOrange,
+    secondary = Color.White
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Orange,
+    primaryVariant = DarkerOrange,
+    secondary = Color.White,
+    secondaryVariant = DarkerOrange,
 
     /* Other default colors to override
     background = Color.White,

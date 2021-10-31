@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.leomurca.boat.presentation.ui.addfeeddetails.AddFeedDetailsScreen
-import com.leomurca.boat.ui.theme.BoatTheme
+import com.leomurca.boat.presentation.theme.BoatTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
@@ -27,13 +27,18 @@ class AddFeedActivity : AppCompatActivity() {
             BoatTheme {
                 val navController = rememberNavController()
 
-                Scaffold { innerPadding ->
+                Scaffold() { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Screen.AddFeed.route,
                         modifier = Modifier.padding(innerPadding),
                         builder = {
-                            composable(Screen.AddFeed.route) { AddFeedScreen(navController, viewModel) }
+                            composable(Screen.AddFeed.route) {
+                                AddFeedScreen(
+                                    navController,
+                                    viewModel
+                                )
+                            }
                             composable(Screen.AddFeedDetails.route) { AddFeedDetailsScreen() }
                         }
                     )
