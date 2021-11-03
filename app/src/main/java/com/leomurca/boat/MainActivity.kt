@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -14,12 +12,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -31,7 +26,9 @@ import com.leomurca.boat.presentation.ui.home.HomeScreen
 import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
-import com.leomurca.boat.presentation.theme.TopBar
+import com.leomurca.boat.presentation.ui.components.CustomScaffold
+import com.leomurca.boat.presentation.ui.components.ScaffoldType
+import com.leomurca.boat.presentation.ui.components.TopBarType
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
@@ -43,9 +40,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val screens = listOf(Screen.Home, Screen.ReadLater, Screen.Settings)
 
-                Scaffold(
-                    bottomBar = { BottomNavigationBar(screens, navController) },
-                    topBar = { TopBar() }
+                CustomScaffold(
+                    scaffoldType = ScaffoldType.MainScreens(
+                        bottomNavigation = { BottomNavigationBar(screens, navController) },
+                        topBarType = TopBarType.LogoOnly
+                    )
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
@@ -60,26 +59,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun TopBar() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TopBar)
-    ) {
-        Image(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_horizontal_logo),
-            contentDescription = "Boat",
-            alignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(55.dp)
-                .padding(10.dp)
-        )
-        Divider()
     }
 }
 

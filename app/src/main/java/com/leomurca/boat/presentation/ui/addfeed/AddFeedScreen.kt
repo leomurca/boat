@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.leomurca.boat.R
 import com.leomurca.boat.data.model.Feed
-import com.leomurca.boat.presentation.ui.components.ScaffoldWithTopBar
+import com.leomurca.boat.presentation.ui.components.CustomScaffold
+import com.leomurca.boat.presentation.ui.components.ScaffoldType
+import com.leomurca.boat.presentation.ui.components.TopBarType
 
 @ExperimentalMaterialApi
 @Composable
@@ -30,7 +32,14 @@ fun AddFeedScreen(
     val uiState = viewModel.uiState.collectAsState()
     val urlState = viewModel.url
 
-    ScaffoldWithTopBar(title = Screen.AddFeed.screeName, onBackPressed = onBackPressed) {
+    CustomScaffold(
+        scaffoldType = ScaffoldType.SecondaryScreens(
+            topBarType = TopBarType.Default(
+                screenName = Screen.AddFeed.screeName,
+                onBackPressed = onBackPressed
+            )
+        )
+    ) {
         Column {
             TextField(
                 value = urlState.value,
