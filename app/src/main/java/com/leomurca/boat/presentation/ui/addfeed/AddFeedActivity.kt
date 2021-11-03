@@ -23,11 +23,12 @@ class AddFeedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContent {
             BoatTheme {
                 val navController = rememberNavController()
 
-                Scaffold() { innerPadding ->
+                Scaffold { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Screen.AddFeed.route,
@@ -35,11 +36,16 @@ class AddFeedActivity : AppCompatActivity() {
                         builder = {
                             composable(Screen.AddFeed.route) {
                                 AddFeedScreen(
-                                    navController,
-                                    viewModel
+                                    navController = navController,
+                                    viewModel = viewModel,
+                                    onBackPressed = { finish() }
                                 )
                             }
-                            composable(Screen.AddFeedDetails.route) { AddFeedDetailsScreen() }
+                            composable(Screen.AddFeedDetails.route) {
+                                AddFeedDetailsScreen(
+                                    navController = navController
+                                )
+                            }
                         }
                     )
                 }
@@ -48,9 +54,9 @@ class AddFeedActivity : AppCompatActivity() {
     }
 }
 
-sealed class Screen(val route: String) {
-    object AddFeed : Screen(Route.ADD_FEED.value)
-    object AddFeedDetails : Screen(Route.ADD_FEED_DETAILS.value)
+sealed class Screen(val route: String, val screeName: String) {
+    object AddFeed : Screen(Route.ADD_FEED.value, "Add Feed")
+    object AddFeedDetails : Screen(Route.ADD_FEED_DETAILS.value, "Add Feed Details")
 }
 
 private enum class Route(val value: String) {

@@ -1,4 +1,4 @@
-package com.leomurca.boat.ui.theme
+package com.leomurca.boat.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

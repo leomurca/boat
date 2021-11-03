@@ -18,47 +18,54 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.leomurca.boat.R
 import com.leomurca.boat.data.model.Feed
+import com.leomurca.boat.presentation.ui.components.ScaffoldWithTopBar
 
 @ExperimentalMaterialApi
 @Composable
-fun AddFeedScreen(navController: NavController, viewModel: AddFeedViewModel) {
+fun AddFeedScreen(
+    navController: NavController,
+    viewModel: AddFeedViewModel,
+    onBackPressed: () -> Unit
+) {
     val uiState = viewModel.uiState.collectAsState()
     val urlState = viewModel.url
 
-    Column {
-        TextField(
-            value = urlState.value,
-            onValueChange = { viewModel.onChangeURL(it) },
-            label = { Text("Feed URL") },
-            placeholder = { Text(text = "Enter the feed url you want to subscribe to...") },
-            modifier = Modifier.textFieldModifiers()
-        )
+    ScaffoldWithTopBar(title = Screen.AddFeed.screeName, onBackPressed = onBackPressed) {
+        Column {
+            TextField(
+                value = urlState.value,
+                onValueChange = { viewModel.onChangeURL(it) },
+                label = { Text("Feed URL") },
+                placeholder = { Text(text = "Enter the feed url you want to subscribe to...") },
+                modifier = Modifier.textFieldModifiers()
+            )
 
-        Button(
-            onClick = { viewModel.onFetchFeed() },
-            content = { Text("Add ") },
-            modifier = Modifier.buttonModifiers()
-        )
+            Button(
+                onClick = { viewModel.onFetchFeed() },
+                content = { Text("Add ") },
+                modifier = Modifier.buttonModifiers()
+            )
 
-        when (val state = uiState.value) {
-            is AddFeedViewModel.UIState.Success -> {
-                Feed(
-                    feed = state.feed,
-                    onClick = { navController.navigate(Screen.AddFeedDetails.route) }
-                )
-            }
-            is AddFeedViewModel.UIState.Empty -> {
-                Text(
-                    text = "No feeds were found!",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.textFieldModifiers()
-                )
-            }
-            is AddFeedViewModel.UIState.Loading -> {
-                // Show loading
-            }
-            is AddFeedViewModel.UIState.Initial -> {
-                // Do nothing
+            when (val state = uiState.value) {
+                is AddFeedViewModel.UIState.Success -> {
+                    Feed(
+                        feed = state.feed,
+                        onClick = { navController.navigate(Screen.AddFeedDetails.route) }
+                    )
+                }
+                is AddFeedViewModel.UIState.Empty -> {
+                    Text(
+                        text = "No feeds were found!",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.textFieldModifiers()
+                    )
+                }
+                is AddFeedViewModel.UIState.Loading -> {
+                    // Show loading
+                }
+                is AddFeedViewModel.UIState.Initial -> {
+                    // Do nothing
+                }
             }
         }
     }

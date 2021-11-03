@@ -31,7 +31,7 @@ import com.leomurca.boat.presentation.ui.home.HomeScreen
 import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
-import com.leomurca.boat.ui.theme.TopBar
+import com.leomurca.boat.presentation.theme.TopBar
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
