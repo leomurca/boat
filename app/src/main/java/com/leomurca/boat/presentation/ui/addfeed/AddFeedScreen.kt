@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.leomurca.boat.R
-import com.leomurca.boat.data.adapter.Feed
+import com.leomurca.boat.domain.model.Feed
 import com.leomurca.boat.presentation.ui.components.CustomScaffold
 import com.leomurca.boat.presentation.ui.components.RemoteImage
 import com.leomurca.boat.presentation.ui.components.ScaffoldType
@@ -92,8 +92,8 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
         Box(modifier = Modifier.boxModifiers()) {
             Row {
                 RemoteImage(
-                    url = feed.channel?.image?.url,
-                    contentDescription = feed.channel?.title ?: "",
+                    url = feed.imagePath,
+                    contentDescription = feed.title,
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.imageModifiers(),
@@ -107,13 +107,13 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
                 )
                 Column {
                     Text(
-                        text = feed.channel?.title ?: "Feed without Title",
+                        text = feed.title,
                         fontWeight = FontWeight.Black,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.textModifiers()
                     )
-                    feed.channel?.description?.let {
+                    feed.description?.let {
                         Text(
                             text = it,
                             maxLines = 3,
@@ -121,7 +121,7 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
                             modifier = Modifier.textModifiers()
                         )
                     }
-                    feed.channel?.language?.let {
+                    feed.language?.let {
                         Text(
                             text = it,
                             modifier = Modifier.textModifiers()

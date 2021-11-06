@@ -1,10 +1,10 @@
-package com.leomurca.boat.data.adapter
+package com.leomurca.boat.data.model.adapters
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
 @Root(name = "image", strict = false)
-class Image(
+class ImageAdapter(
     @field:Element(name = "url")
     var url: String? = null,
 

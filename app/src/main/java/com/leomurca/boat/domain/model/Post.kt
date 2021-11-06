@@ -1,4 +1,4 @@
-package com.leomurca.boat.data.model
+package com.leomurca.boat.domain.model
 
 data class Post(
     val title: String? = null,

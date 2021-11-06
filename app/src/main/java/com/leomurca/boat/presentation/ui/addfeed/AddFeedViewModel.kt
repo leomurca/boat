@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
-import com.leomurca.boat.data.adapter.Feed
-import com.leomurca.boat.data.network.NetworkResult
+import com.leomurca.boat.data.model.ResultOf
 import com.leomurca.boat.data.repository.FeedRepository
-import com.leomurca.boat.extension.toNetworkResult
+import com.leomurca.boat.domain.model.Feed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,8 +29,8 @@ class AddFeedViewModel @Inject constructor(
     fun onFetchFeed() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = UIState.Loading
-            when (val result = feedRepository.feedWithURL(_url.value).toNetworkResult()) {
-                is NetworkResult.Success -> {
+            when (val result = feedRepository.feedWithURL(_url.value)) {
+                is ResultOf.Success -> {
                     _uiState.value = UIState.FeedFound(feed = result.data)
                 }
                 else -> {

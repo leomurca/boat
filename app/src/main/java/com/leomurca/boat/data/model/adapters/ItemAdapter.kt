@@ -1,10 +1,10 @@
-package com.leomurca.boat.data.adapter
+package com.leomurca.boat.data.model.adapters
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
 @Root(name = "item", strict = false)
-class Item(
+class ItemAdapter(
     @field:Element(name = "title")
     var title: String? = null,
 

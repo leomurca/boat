@@ -1,15 +1,17 @@
 package com.leomurca.boat.extension
 
-import com.leomurca.boat.data.adapter.Feed
-import com.leomurca.boat.data.network.NetworkResult
+import com.leomurca.boat.data.model.adapters.FeedAdapter
+import com.leomurca.boat.data.mapper.FeedAdapterToFeedMapper
+import com.leomurca.boat.data.model.ResultOf
+import com.leomurca.boat.domain.model.Feed
 import retrofit2.Response
 
-fun Response<Feed>.toNetworkResult(): NetworkResult<Feed> {
+fun Response<FeedAdapter>.toResultOf(mapper: FeedAdapterToFeedMapper): ResultOf<Feed> {
     return try {
         if (this.isSuccessful) {
-            NetworkResult.Success(this.body()!!)
-        } else NetworkResult.Error(this.message())
+            ResultOf.Success(mapper.map(this.body()!!))
+        } else ResultOf.Error(this.message())
     } catch (error: Exception) {
-        NetworkResult.NetworkException(error.message!!)
+        ResultOf.ExceptionOf(error.message!!)
     }
 }
