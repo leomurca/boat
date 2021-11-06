@@ -60,6 +60,9 @@ dependencies {
     implementation Dependencies.androidx_navigation_compose
     implementation Dependencies.material
     implementation Dependencies.hilt_android
+    implementation Dependencies.simple_xml
+    implementation Dependencies.retrofit2
+    implementation Dependencies.retrofit2_converter_simplexml
 
     androidTestImplementation Dependencies.androidx_compose_ui_test_junit4
     androidTestImplementation Dependencies.androidx_ext_junit

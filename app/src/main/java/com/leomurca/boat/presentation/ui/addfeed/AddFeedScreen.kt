@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.leomurca.boat.R
-import com.leomurca.boat.data.model.Feed
+import com.leomurca.boat.data.adapter.Feed
 import com.leomurca.boat.presentation.ui.components.CustomScaffold
 import com.leomurca.boat.presentation.ui.components.ScaffoldType
 import com.leomurca.boat.presentation.ui.components.TopBarType
@@ -56,13 +56,13 @@ fun AddFeedScreen(
             )
 
             when (val state = uiState.value) {
-                is AddFeedViewModel.UIState.Success -> {
+                is AddFeedViewModel.UIState.FeedFound -> {
                     Feed(
                         feed = state.feed,
                         onClick = { navController.navigate(Screen.AddFeedDetails.route) }
                     )
                 }
-                is AddFeedViewModel.UIState.Empty -> {
+                is AddFeedViewModel.UIState.FeedNotFound -> {
                     Text(
                         text = "No feeds were found!",
                         textAlign = TextAlign.Center,
@@ -70,7 +70,11 @@ fun AddFeedScreen(
                     )
                 }
                 is AddFeedViewModel.UIState.Loading -> {
-                    // Show loading
+                    Text(
+                        text = "Loading...",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.textFieldModifiers()
+                    )
                 }
                 is AddFeedViewModel.UIState.Initial -> {
                     // Do nothing
@@ -88,29 +92,33 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
             Row {
                 Image(
                     bitmap = ImageBitmap.imageResource(id = R.drawable.nat),
-                    contentDescription = feed.title,
+                    contentDescription = feed.channel?.title,
                     modifier = Modifier.imageModifiers(),
                     alignment = Alignment.Center,
                     contentScale = ContentScale.Crop
                 )
                 Column {
                     Text(
-                        text = feed.title,
+                        text = feed.channel?.title ?: "Feed without Title",
                         fontWeight = FontWeight.Black,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.textModifiers()
                     )
-                    Text(
-                        text = feed.description,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.textModifiers()
-                    )
-                    Text(
-                        text = feed.language ?: "",
-                        modifier = Modifier.textModifiers()
-                    )
+                    feed.channel?.description?.let {
+                        Text(
+                            text = it,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.textModifiers()
+                        )
+                    }
+                    feed.channel?.language?.let {
+                        Text(
+                            text = it,
+                            modifier = Modifier.textModifiers()
+                        )
+                    }
                 }
             }
         }

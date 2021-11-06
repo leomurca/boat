@@ -15,6 +15,9 @@ object Dependencies {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val hilt_compiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
     const val hilt_android = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val simple_xml = "org.simpleframework:simple-xml:${Versions.simple_xml}"
+    const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
+    const val retrofit2_converter_simplexml= "com.squareup.retrofit2:converter-simplexml:${Versions.retrofit2}"
 }
 
 private object Versions {
@@ -29,4 +32,6 @@ private object Versions {
     const val espresso = "3.4.0"
     const val material = "1.4.0"
     const val hilt = "2.38.1"
+    const val simple_xml = "2.7.1"
+    const val retrofit2 = "2.9.0"
 }

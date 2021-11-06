@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
-import com.leomurca.boat.data.model.Feed
+import com.leomurca.boat.data.adapter.Feed
+import com.leomurca.boat.data.network.NetworkResult
 import com.leomurca.boat.data.repository.FeedRepository
+import com.leomurca.boat.extension.toNetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +29,14 @@ class AddFeedViewModel @Inject constructor(
 
     fun onFetchFeed() {
         viewModelScope.launch(Dispatchers.IO) {
-            feedRepository.feedWithURL(_url.value)?.let { feed ->
-                _uiState.value = UIState.Success(feed = feed)
-            } ?: run {
-                _uiState.value = UIState.Empty
+            _uiState.value = UIState.Loading
+            when (val result = feedRepository.feedWithURL(_url.value).toNetworkResult()) {
+                is NetworkResult.Success -> {
+                    _uiState.value = UIState.FeedFound(feed = result.data)
+                }
+                else -> {
+                    _uiState.value = UIState.FeedNotFound
+                }
             }
         }
     }
@@ -40,8 +46,8 @@ class AddFeedViewModel @Inject constructor(
     }
 
     sealed class UIState {
-        data class Success(val feed: Feed) : UIState()
-        object Empty : UIState()
+        data class FeedFound(val feed: Feed) : UIState()
+        object FeedNotFound : UIState()
         object Loading : UIState()
         object Initial : UIState()
     }
