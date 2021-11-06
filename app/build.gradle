@@ -63,6 +63,7 @@ dependencies {
     implementation Dependencies.simple_xml
     implementation Dependencies.retrofit2
     implementation Dependencies.retrofit2_converter_simplexml
+    implementation Dependencies.picasso
 
     androidTestImplementation Dependencies.androidx_compose_ui_test_junit4
     androidTestImplementation Dependencies.androidx_ext_junit

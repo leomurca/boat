@@ -8,9 +8,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.leomurca.boat.R
 import com.leomurca.boat.data.adapter.Feed
 import com.leomurca.boat.presentation.ui.components.CustomScaffold
+import com.leomurca.boat.presentation.ui.components.RemoteImage
 import com.leomurca.boat.presentation.ui.components.ScaffoldType
 import com.leomurca.boat.presentation.ui.components.TopBarType
 
@@ -90,12 +91,19 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
     Card(elevation = 5.dp, modifier = Modifier.cardModifiers(), onClick = { onClick() }) {
         Box(modifier = Modifier.boxModifiers()) {
             Row {
-                Image(
-                    bitmap = ImageBitmap.imageResource(id = R.drawable.nat),
-                    contentDescription = feed.channel?.title,
-                    modifier = Modifier.imageModifiers(),
+                RemoteImage(
+                    url = feed.channel?.image?.url,
+                    contentDescription = feed.channel?.title ?: "",
                     alignment = Alignment.Center,
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.imageModifiers(),
+                    onError = {
+                        Image(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_no_image_white),
+                            contentDescription = "No image provided!",
+                            modifier = Modifier.noImageModifiers()
+                        )
+                    }
                 )
                 Column {
                     Text(
@@ -142,6 +150,10 @@ private fun Modifier.boxModifiers() = this.padding(10.dp)
 private fun Modifier.imageModifiers() = this
     .width(100.dp)
     .height(100.dp)
-    .background(Color.Black)
+    .background(Color.LightGray)
+
+private fun Modifier.noImageModifiers() = this
+    .width(60.dp)
+    .height(60.dp)
 
 private fun Modifier.textModifiers() = this.padding(start = 10.dp)

@@ -18,6 +18,7 @@ object Dependencies {
     const val simple_xml = "org.simpleframework:simple-xml:${Versions.simple_xml}"
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
     const val retrofit2_converter_simplexml= "com.squareup.retrofit2:converter-simplexml:${Versions.retrofit2}"
+    const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
 }
 
 private object Versions {
@@ -34,4 +35,5 @@ private object Versions {
     const val hilt = "2.38.1"
     const val simple_xml = "2.7.1"
     const val retrofit2 = "2.9.0"
+    const val picasso = "2.8"
 }
