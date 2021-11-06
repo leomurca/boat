@@ -60,7 +60,7 @@ fun AddFeedScreen(
                 is AddFeedViewModel.UIState.FeedFound -> {
                     Feed(
                         feed = state.feed,
-                        onClick = { navController.navigate(Screen.AddFeedDetails.route) }
+                        onClick = { navigateToAddFeedDetails(navController, state.feed) }
                     )
                 }
                 is AddFeedViewModel.UIState.FeedNotFound -> {
@@ -131,6 +131,12 @@ private fun Feed(feed: Feed, onClick: () -> Unit) {
             }
         }
     }
+}
+
+private fun navigateToAddFeedDetails(navController: NavController, feed: Feed) {
+    // I hope that the jetpack compose team solve this one day...
+    navController.currentBackStackEntry?.savedStateHandle?.set("feed", feed)
+    navController.navigate(Screen.AddFeedDetails.route)
 }
 
 private fun Modifier.textFieldModifiers() = this

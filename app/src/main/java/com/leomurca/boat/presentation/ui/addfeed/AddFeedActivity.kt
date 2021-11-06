@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.leomurca.boat.domain.model.Feed
 import com.leomurca.boat.presentation.ui.addfeeddetails.AddFeedDetailsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +43,15 @@ class AddFeedActivity : AppCompatActivity() {
                                 )
                             }
                             composable(Screen.AddFeedDetails.route) {
-                                AddFeedDetailsScreen(
-                                    navController = navController
-                                )
+                                navController.previousBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.get<Feed>("feed")
+                                    ?.let { feed ->
+                                        AddFeedDetailsScreen(
+                                            navController = navController,
+                                            feed = feed
+                                        )
+                                    }
                             }
                         }
                     )
