@@ -2,6 +2,7 @@ package com.leomurca.boat.data.repository
 
 import com.leomurca.boat.data.database.daos.FeedDao
 import com.leomurca.boat.data.mapper.FeedAdapterToFeedMapper
+import com.leomurca.boat.data.mapper.FeedEntityToFeedMapper
 import com.leomurca.boat.data.mapper.FeedToFeedEntityMapper
 import com.leomurca.boat.data.model.ResultOf
 import com.leomurca.boat.data.repository.datasource.FeedDataSource
@@ -25,6 +26,12 @@ class FeedRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             feedDao.insertFeed(FeedToFeedEntityMapper().map(feed))
             ResultOf.Success(Unit)
+        }
+    }
+
+    override suspend fun feeds(): ResultOf<List<Feed>> {
+        return withContext(Dispatchers.IO) {
+            ResultOf.Success(feedDao.getFeeds().map { FeedEntityToFeedMapper().map(it) })
         }
     }
 }

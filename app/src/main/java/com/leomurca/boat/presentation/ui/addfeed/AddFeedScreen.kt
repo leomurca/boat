@@ -92,7 +92,7 @@ fun AddFeedScreen(
 
 @ExperimentalMaterialApi
 @Composable
-private fun Feed(feed: Feed, onClick: () -> Unit) {
+fun Feed(feed: Feed, onClick: () -> Unit) {
     Card(elevation = 5.dp, modifier = Modifier.cardModifiers(), onClick = { onClick() }) {
         Box(modifier = Modifier.boxModifiers()) {
             Row {

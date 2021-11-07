@@ -1,8 +1,10 @@
 package com.leomurca.boat.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,12 +30,18 @@ import com.leomurca.boat.presentation.ui.home.HomeScreen
 import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
+import com.leomurca.boat.presentation.ui.addfeed.AddFeedActivity
 import com.leomurca.boat.presentation.ui.components.CustomScaffold
 import com.leomurca.boat.presentation.ui.components.ScaffoldType
 import com.leomurca.boat.presentation.ui.components.TopBarType
+import com.leomurca.boat.presentation.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +53,26 @@ class MainActivity : ComponentActivity() {
                 CustomScaffold(
                     scaffoldType = ScaffoldType.MainScreens(
                         bottomNavigation = { BottomNavigationBar(screens, navController) },
-                        topBarType = TopBarType.LogoOnly
-                    )
+                        topBarType = TopBarType.LogoOnly,
+                    ),
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { startActivity(Intent(this, AddFeedActivity::class.java)) },
+                            content = { Icon(Icons.Outlined.Add, "Add a new feed") },
+                        )
+                    }
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Screen.Home.route,
                         modifier = Modifier.padding(innerPadding),
                         builder = {
-                            composable(Screen.Home.route) { HomeScreen(this@MainActivity) }
+                            composable(Screen.Home.route) {
+                                HomeScreen(
+                                    this@MainActivity,
+                                    homeViewModel
+                                )
+                            }
                             composable(Screen.ReadLater.route) { ReadLaterScreen(navController) }
                             composable(Screen.Settings.route) { SettingsScreen(navController) }
                         }

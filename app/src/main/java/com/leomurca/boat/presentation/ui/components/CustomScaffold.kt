@@ -24,13 +24,15 @@ import com.leomurca.boat.presentation.theme.DarkerOrange
 @Composable
 fun CustomScaffold(
     scaffoldType: ScaffoldType,
+    floatingActionButton: (@Composable () -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     when (scaffoldType) {
         is ScaffoldType.MainScreens -> {
             Scaffold(
                 bottomBar = { scaffoldType.bottomNavigation.invoke() },
-                topBar = { TopBarResolver(topBarType = scaffoldType.topBarType) }
+                topBar = { TopBarResolver(topBarType = scaffoldType.topBarType) },
+                floatingActionButton = { floatingActionButton?.invoke() }
             ) { content(it) }
         }
 

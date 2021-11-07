@@ -6,6 +6,7 @@ import com.leomurca.boat.domain.model.Feed
 class FeedToFeedEntityMapper : Mapper<Feed, FeedEntity> {
     override fun map(from: Feed): FeedEntity {
         return FeedEntity(
+            id = System.currentTimeMillis() / 1000,
             title = from.title,
             description = from.description,
             imagePath = from.imagePath,
