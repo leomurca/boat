@@ -2,6 +2,7 @@ package com.leomurca.boat.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.leomurca.boat.R
+import com.leomurca.boat.presentation.theme.DarkerOrange
 import com.leomurca.boat.presentation.theme.DarkerOrange
 
 @Composable
@@ -94,6 +96,41 @@ private fun TopBarResolver(topBarType: TopBarType) {
                 Divider()
             }
         }
+        is TopBarType.Editing -> {
+            Column(modifier = Modifier.columnModifiers()) {
+                Row(
+                    modifier = Modifier.rowModifiers(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = { topBarType.onBackPressed.invoke() },
+                        content = {
+                            Icon(
+                                Icons.Outlined.ArrowBack,
+                                contentDescription = "Back to previous screen",
+                                tint = Color.White
+                            )
+                        },
+                    )
+                    Text(
+                        text = topBarType.screenName,
+                        textAlign = TextAlign.Center,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                    )
+
+                    Text(
+                        text = "Save",
+                        color = Color.White,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .clickable { topBarType.onEditSaved.invoke() }
+                    )
+                }
+                Divider()
+            }
+        }
     }
 }
 
@@ -111,6 +148,11 @@ sealed class ScaffoldType {
 sealed class TopBarType {
     object LogoOnly : TopBarType()
     data class Default(val screenName: String, val onBackPressed: () -> Unit) : TopBarType()
+    data class Editing(
+        val screenName: String,
+        val onBackPressed: () -> Unit,
+        val onEditSaved: () -> Unit
+    ) : TopBarType()
 }
 
 private fun Modifier.columnModifiers() = this

@@ -14,13 +14,15 @@ import androidx.navigation.compose.rememberNavController
 import com.leomurca.boat.domain.model.Feed
 import com.leomurca.boat.presentation.ui.addfeeddetails.AddFeedDetailsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
+import com.leomurca.boat.presentation.ui.addfeeddetails.AddFeedDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class AddFeedActivity : AppCompatActivity() {
 
-    private val viewModel: AddFeedViewModel by viewModels()
+    private val addFeedViewModel: AddFeedViewModel by viewModels()
+    private val addFeedDetailsViewModel: AddFeedDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,7 @@ class AddFeedActivity : AppCompatActivity() {
                             composable(Screen.AddFeed.route) {
                                 AddFeedScreen(
                                     navController = navController,
-                                    viewModel = viewModel,
+                                    viewModel = addFeedViewModel,
                                     onBackPressed = { finish() }
                                 )
                             }
@@ -49,7 +51,8 @@ class AddFeedActivity : AppCompatActivity() {
                                     ?.let { feed ->
                                         AddFeedDetailsScreen(
                                             navController = navController,
-                                            feed = feed
+                                            viewModel = addFeedDetailsViewModel,
+                                            onInitViewModel = { addFeedDetailsViewModel.init(feed) }
                                         )
                                     }
                             }
