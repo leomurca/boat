@@ -11,6 +11,7 @@ class FeedAdapterToFeedMapper : Mapper<FeedAdapter, Feed> {
             description = from.channel?.description,
             imagePath = from.channel?.image?.url,
             language = from.channel?.language,
+            url = "",
             items = from.channel?.items?.map { item ->
                 Post(
                     title = item.title,

@@ -52,7 +52,8 @@ class AddFeedActivity : AppCompatActivity() {
                                         AddFeedDetailsScreen(
                                             navController = navController,
                                             viewModel = addFeedDetailsViewModel,
-                                            onInitViewModel = { addFeedDetailsViewModel.init(feed) }
+                                            onInitViewModel = { addFeedDetailsViewModel.init(feed) },
+                                            onFinishSavingFeed = { finish() }
                                         )
                                     }
                             }

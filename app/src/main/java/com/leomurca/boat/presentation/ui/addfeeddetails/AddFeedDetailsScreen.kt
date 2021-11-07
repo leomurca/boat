@@ -3,8 +3,7 @@ package com.leomurca.boat.presentation.ui.addfeeddetails
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -13,7 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.leomurca.boat.R
 import com.leomurca.boat.presentation.ui.addfeed.Screen
@@ -23,7 +24,8 @@ import com.leomurca.boat.presentation.ui.components.*
 fun AddFeedDetailsScreen(
     navController: NavController,
     viewModel: AddFeedDetailsViewModel,
-    onInitViewModel: () -> Unit
+    onInitViewModel: () -> Unit,
+    onFinishSavingFeed: () -> Unit
 ) {
     onInitViewModel.invoke()
     val uiState = viewModel.uiState.collectAsState()
@@ -34,7 +36,7 @@ fun AddFeedDetailsScreen(
             topBarType = TopBarType.Editing(
                 screenName = Screen.AddFeedDetails.screeName,
                 onBackPressed = { navController.popBackStack() },
-                onEditSaved = {}
+                onEditSaved = { viewModel.onSaveFeed() }
             )
         )
     ) {
@@ -77,6 +79,25 @@ fun AddFeedDetailsScreen(
             )
 
             when (uiState.value) {
+                is AddFeedDetailsViewModel.UIState.Success -> {
+                    AlertDialog(
+                        title = {
+                            Text(
+                                text = "Feed saved with success!",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = { onFinishSavingFeed.invoke() },
+                                content = { Text("Ok") },
+                                modifier = Modifier.padding(20.dp),
+                            )
+                        },
+                        onDismissRequest = {},
+                    )
+                }
                 is AddFeedDetailsViewModel.UIState.Editing -> {
                     // Do Nothing
                 }

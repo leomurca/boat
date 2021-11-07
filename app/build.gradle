@@ -20,6 +20,15 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
     }
 
     buildTypes {
@@ -65,6 +74,10 @@ dependencies {
     implementation Dependencies.retrofit2
     implementation Dependencies.retrofit2_converter_simplexml
     implementation Dependencies.picasso
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
+
+    annotationProcessor Dependencies.room_compiler
 
     androidTestImplementation Dependencies.androidx_compose_ui_test_junit4
     androidTestImplementation Dependencies.androidx_ext_junit
@@ -75,4 +88,5 @@ dependencies {
     debugImplementation Dependencies.androidx_compose_ui_tooling
 
     kapt Dependencies.hilt_compiler
+    kapt Dependencies.room_compiler
 }

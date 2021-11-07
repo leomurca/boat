@@ -60,7 +60,12 @@ fun AddFeedScreen(
                 is AddFeedViewModel.UIState.FeedFound -> {
                     Feed(
                         feed = state.feed,
-                        onClick = { navigateToAddFeedDetails(navController, state.feed) }
+                        onClick = {
+                            navigateToAddFeedDetails(
+                                navController,
+                                state.feed.copy(url = urlState.value)
+                            )
+                        }
                     )
                 }
                 is AddFeedViewModel.UIState.FeedNotFound -> {

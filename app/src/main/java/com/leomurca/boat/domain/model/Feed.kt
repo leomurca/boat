@@ -9,5 +9,6 @@ data class Feed(
     val description: String? = null,
     val imagePath: String? = null,
     val language: String? = null,
+    val url: String,
     val items: List<Post>? = null
-): Parcelable
+) : Parcelable

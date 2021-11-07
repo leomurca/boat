@@ -19,6 +19,9 @@ object Dependencies {
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
     const val retrofit2_converter_simplexml= "com.squareup.retrofit2:converter-simplexml:${Versions.retrofit2}"
     const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
+    const val room_runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
 }
 
 private object Versions {
@@ -36,4 +39,5 @@ private object Versions {
     const val simple_xml = "2.7.1"
     const val retrofit2 = "2.9.0"
     const val picasso = "2.8"
+    const val room = "2.3.0"
 }

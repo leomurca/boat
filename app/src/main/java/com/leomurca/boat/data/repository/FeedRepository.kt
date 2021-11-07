@@ -5,4 +5,5 @@ import com.leomurca.boat.domain.model.Feed
 
 interface FeedRepository {
     suspend fun feedWithURL(url: String): ResultOf<Feed>
+    suspend fun saveFeed(feed: Feed): ResultOf<Unit>
 }

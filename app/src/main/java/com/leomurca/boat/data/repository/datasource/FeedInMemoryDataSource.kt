@@ -11,7 +11,7 @@ class FeedInMemoryDataSource : FeedDataSource {
                 channel = ChannelAdapter(
                     title = "Nat King Cole RSS Feed Titleeeeeeeee",
                     description = "There was a boy. A very enchanted boy. They say he wandered very far.",
-                    language = "en-US"
+                    language = "en-US",
                 )
             )
         )
