@@ -1,4 +1,4 @@
-package com.leomurca.boat
+package com.leomurca.boat.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.leomurca.boat.R
 import com.leomurca.boat.presentation.ui.home.HomeScreen
 import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
