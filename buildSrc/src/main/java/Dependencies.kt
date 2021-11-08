@@ -22,6 +22,7 @@ object Dependencies {
     const val room_runtime = "androidx.room:room-runtime:${Versions.room}"
     const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
     const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
+    const val swipe_refresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.swipe_refresh}"
 }
 
 private object Versions {
@@ -40,4 +41,5 @@ private object Versions {
     const val retrofit2 = "2.9.0"
     const val picasso = "2.8"
     const val room = "2.3.0"
+    const val swipe_refresh= "0.20.2"
 }

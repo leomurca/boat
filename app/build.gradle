@@ -76,6 +76,7 @@ dependencies {
     implementation Dependencies.picasso
     implementation Dependencies.room_runtime
     implementation Dependencies.room_ktx
+    implementation Dependencies.swipe_refresh
 
     annotationProcessor Dependencies.room_compiler
 

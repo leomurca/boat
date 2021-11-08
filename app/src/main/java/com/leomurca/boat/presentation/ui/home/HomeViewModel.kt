@@ -22,17 +22,34 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState: StateFlow<UIState> get() = _uiState
 
+    private val _isRefreshing = MutableStateFlow(true)
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing
+
     init {
+        refreshFeedList()
+    }
+
+    fun refreshFeedList() {
         viewModelScope.launch {
-            delay(4000L)
+            _isRefreshing.value = true
+            delay(4000L) // Just for demonstrations purposes
             when (val result = feedRepository.feeds()) {
                 is ResultOf.Success -> {
-                    _uiState.value = UIState.FeedsLoaded(feeds = result.data)
+                    _uiState.value = handleSuccess(result.data)
                 }
                 is ResultOf.Error -> {
                     _uiState.value = UIState.Error(message = result.error)
                 }
             }
+            _isRefreshing.value = false
+        }
+    }
+
+    private fun handleSuccess(feeds: List<Feed>): UIState {
+        return if (feeds.isEmpty()) {
+            UIState.Empty
+        } else {
+            UIState.FeedsLoaded(feeds)
         }
     }
 

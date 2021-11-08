@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -30,6 +31,7 @@ import com.leomurca.boat.presentation.ui.home.HomeScreen
 import com.leomurca.boat.presentation.ui.readlater.ReadLaterScreen
 import com.leomurca.boat.presentation.ui.settings.SettingsScreen
 import com.leomurca.boat.presentation.theme.BoatTheme
+import com.leomurca.boat.presentation.theme.Orange
 import com.leomurca.boat.presentation.ui.addfeed.AddFeedActivity
 import com.leomurca.boat.presentation.ui.components.CustomScaffold
 import com.leomurca.boat.presentation.ui.components.ScaffoldType
@@ -58,7 +60,14 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = { startActivity(Intent(this, AddFeedActivity::class.java)) },
-                            content = { Icon(Icons.Outlined.Add, "Add a new feed") },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Add,
+                                    contentDescription = "Add a new feed",
+                                    tint = Color.White,
+                                )
+                            },
+                            backgroundColor = Orange
                         )
                     }
                 ) { innerPadding ->
@@ -67,12 +76,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.Home.route,
                         modifier = Modifier.padding(innerPadding),
                         builder = {
-                            composable(Screen.Home.route) {
-                                HomeScreen(
-                                    this@MainActivity,
-                                    homeViewModel
-                                )
-                            }
+                            composable(Screen.Home.route) { HomeScreen(homeViewModel) }
                             composable(Screen.ReadLater.route) { ReadLaterScreen(navController) }
                             composable(Screen.Settings.route) { SettingsScreen(navController) }
                         }
