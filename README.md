@@ -53,3 +53,4 @@ Foi utilizado uma feature do gradle para facilitar o gerenciamento de dependenci
 ## Coming soon
 
 - Unit tests utilizando JUnit e testes de UI utilizando o Espresso.
+- Implementar a listagem de posts e leitura dos mesmos (funcionalidade core da aplicacao).
