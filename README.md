@@ -37,7 +37,7 @@ Esse nivel e responsavel por tudo que e mostrado ao usuario final. Todos os comp
 
 Perceba que foi utilizado uma unica Activity para as telas principais do app (Home, Read Later e Settings). E para fluxos especificos, a proposicao foi iniciar activities novas com seus respectivos fluxos de navegacoes (assim como a MainActivity).
 
-![Level Data](docs/mvvm-png)
+![MVVM](docs/mvvm.png)
 
 ## Bibliotecas utilizadas
 
