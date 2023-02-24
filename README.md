@@ -1,56 +1,55 @@
 # boat
-Um leitor para RSS Feeds para Android.
+A RSS Feed Reader for Android.
 
 **Demo**
 ![Demo](docs/demo.gif)
 
-Para o app em questao, escolhi utilizar ideias da Arquitetura Limpa de Robert C. Martin, que preza por organizar componentes em niveis guiados pelo o quao estavel um componente e. Por exemplo: Os componentes dentro do nivel do dominio serao os mais estaveis da aplicacao, pois varias classes irao depender deles.
+For the app in question, I chose to use ideas of Robert C. Martin's clean architecture, which values organizing components in levels guided by how stable a component is. For example, components within the level of domain will be the most stable of the application, as several classes will depend on them.
 
 ![Clean Architecture](docs/clean-arch.png)
 
-A organizacao das pastas ficou da seguinte forma:
+This is the project's file tree:
 
 ![Level 1 ](docs/level-1.jpg)
 
-E importante dizer que, pelo curto periodo de tempo, nao dividi os niveis em uma arquitetura multi-modulo, a qual seria extremamente util para o encapsulamento dos componentes.
+It's important to mention that a multi-module architecture was not used to separate the layers, but it would be super useful to encapsulate components.
 
-
-## Nivel data
+## Data layer
 
 ![Level Data](docs/level-data.jpg)
 
-Nesse nivel, o conceito principal desse nivel que agregou para a organizacao da arquitetura do projeto, foi a aplicacao do "Single Source of Truth" atraves do padrao Repository. Dessa forma, conseguimos ter um unico contrato que gerencia as operacoes sem depender de implementacoes de banco de dados ou APIs, seguindo o conceito de arquitetura Plug-In.
+At this layer, the main concept that added to the organization of the project architecture was the application of the "Single Source of Truth" through the repository standard. In this way, we have been able to have a single contract that manages operations without depending on database or APIs implementations, following the concept of plug-in architecture.
 
-Perceba tambem que temos 2 data sources diferentes `FeedInMemoryDataSource` e `FeedRemoteDataSource`. Isso evidencia ainda mais o quao agnostico de implementacoes nosso repository esta.
+Also note that we have 2 Date Different Sorces `FeedinMemorydatasource` and `FeedRemoteDataSource`. This further highlights the agnostic of implementations our repository is.
 
-## Nivel domain
+## Domain layer 
 
 ![Level Data](docs/level-domain.jpg)
 
-No nivel de dominio, foram listados apenas os models, porem, no futuro seria interessante adicionar classes para tratar casos de uso da aplicacao, para facilitar a testabilidade e a separacao de reponsabilidadades, uma vez que essas classes seriam responsaveis por operacoes especificas da aplicacao.
+At domain layer, only models were listed, but in the future it would be interesting to add classes to treat cases of application use, to facilitate the will and the separation of reponsabilidades, as these classes would be responsible for specific application operations.
 
-## Nivel presentation
+## Presentation Layer
 
 ![Level Data](docs/level-presentation.jpg)
 
-Esse nivel e responsavel por tudo que e mostrado ao usuario final. Todos os componentes de UI estao nesse nivel e nele, foi utilizado a arquitetura MVVM junto ao Jetpack Compose, o novo toolkit de UI para desenvolver interfaces no android de maneira declarativa. E importante salientar que esse toolkit ainda esta em suas versoes iniciais, logo, possui algumas limitacoes, como por exemplo, o fluxo de navegacoes na app.
+This layer is responsible for everything that is shown to the final user. All UI components are in this layer and it was used the MVVM architecture with JetPack Compose, the new UI Toolkit to develop Android interfaces in a declarative way. It is important to point out that this Toolkit is still in its initial versions, so it has some limits, such as the flow of navigacations in the app.
 
-Perceba que foi utilizado uma unica Activity para as telas principais do app (Home, Read Later e Settings). E para fluxos especificos, a proposicao foi iniciar activities novas com seus respectivos fluxos de navegacoes (assim como a MainActivity).
+Note that a single activity was used for the main screens of the app (Home, Read Later and Settings). And for specific flows, the proposition was to start new activities with their respective navigation flows (as well as mainactivity).
 
 ![MVVM](docs/mvvm.png)
 
-## Bibliotecas utilizadas
+## Libraries used
 
-- Dagger + Hilt para injecao de dependencias;
-- Retrofit para acesso a internet;
-- Room para persistencia de dados;
-- Simple XML para mapeamento de dados via XML;
-- Picasso para carregamento de imagens;
-- E alguns pacotes de UI para utilizar junto ao Jetpack compose.
+- Dagger + Hilt for dependency injection;
+- Retrofit for network requests;
+- Room for data persistence;
+- Simple XML for XML data mapping;
+- Picasso for image loading;
+- And some UI packs to use with Jetpack Compose.
 
-Foi utilizado uma feature do gradle para facilitar o gerenciamento de dependencias e suas versoes. Perceba que tem um module `buildSrc` no projeto onde fazemos todo esse gerenciamento.
+A gradle feature was used to facilitate the dependencies management and its versions. Note that you have a module buildSrc in the project where we do all this management.
 
 ## Coming soon
 
-- Unit tests utilizando JUnit e testes de UI utilizando o Espresso.
-- Implementar a listagem de posts e leitura dos mesmos (funcionalidade core da aplicacao).
+- Unit tests using JUnit e UI tests using Espresso.
+- Implement post listing and reading (core functionality of application).
